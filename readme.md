@@ -8,7 +8,7 @@ This project explores the Vietnamese job market for Data Analyst and related rol
 I analyzed skills by grouping them to calculate median salaries and their likelihood of appearing in job postings. The results were visualized to show the relationship between salary potential and demand across skills. This highlighted which technologies are both more prevalent and more rewarding for newcomer
 
 View my notebook with detailed steps here:
-[2. High_ROI_Skills.ipynb](Project\2%20High_ROI_Skills.ipynb)
+[2. High_ROI_Skills.ipynb](2.%20High_ROI_Skills.ipynb)
 
 ### Visualize Data
 ```python
@@ -27,7 +27,7 @@ ax.xaxis.set_major_formatter(PercentFormatter(decimals=0))
 ```
 
 ### Result
-![Which skills are most effective for newcomers (in terms of opportunities & salary)?](Project\images\most_optimal_skills_da.png)
+![Which skills are most effective for newcomers (in terms of opportunities & salary)?](images\most_optimal_skills_da.png)
 
 ### Insights
 

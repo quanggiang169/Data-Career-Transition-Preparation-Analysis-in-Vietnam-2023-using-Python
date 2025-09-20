@@ -27,7 +27,7 @@ ax.xaxis.set_major_formatter(PercentFormatter(decimals=0))
 ```
 
 ### Result
-![Which skills are most effective for newcomers (in terms of opportunities & salary)?](images\most_optimal_skills_da.png)
+![Which skills are most effective for newcomers (in terms of opportunities & salary)?](images/most_optimal_skills_da.png)
 
 ### Insights
 

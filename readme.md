@@ -144,7 +144,7 @@ for p, n in zip(ax.patches, df_grouped['n']):
 - 🎓 Accessibility in Vietnam: DA is the most approachable entry role with many postings not requiring a degree. Data Engineer is also promising for non-degree entrants, while Data Scientist skews more toward degree-dependent paths. Senior positions remain aspirational for the long term.
 
 View my notebook with detailed steps here:
-[4. Career_Pathways_Beyond_DA.ipynb](4.20%Career_Pathways_Beyond_DA.ipynb)
+[4. Career_Pathways_Beyond_DA.ipynb](4.%20Career_Pathways_Beyond_DA.ipynb)
 
 ### 3.1. How do salaries differ across DA and other data-related roles?
 I filtered the dataset to include only postings in Vietnam with valid salary information and focused on the six most frequent job titles within data-related roles. Median salaries were calculated for each role to establish a clear ranking of pay levels. The results were visualized with a boxplot to compare salary distributions and highlight differences across roles.

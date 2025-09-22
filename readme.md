@@ -1,7 +1,31 @@
-# Project Overview
-This project explores the Vietnamese job market for Data Analyst and related roles using real-world job posting data. The analysis is designed for professionals considering a career transition into data analytics, with the goal of answering two big questions:
-- What does the current job market for Data Analysts in Vietnam look like?
-- How can career changers strategically prepare themselves to succeed in this field?
+# 📌 Overview
+This project explores the Vietnamese job market for Data-related roles in 2023, with a focus on **Data Analyst (DA)** as the most common entry pathway.  
+It analyzes salaries, skill demand, and accessibility (degree requirements, remote work options) to help career switchers and early-career professionals understand how to prepare for a Data career in Vietnam.  
+
+**Source:** The dataset is adapted from **Luke Barousse's Course**, filtered to highlight job postings and salary insights relevant to the Vietnamese market.  
+
+# Questions I Answered
+1. **Which skills are most effective for newcomers (in terms of opportunities & salary)?**  
+   → Identified technologies that combine high demand and strong pay.  
+
+2. **How can Data Analysts maximize salary in Vietnam?**  
+   → Evaluated the role of location, technical skills, and degree requirements.  
+
+3. **How do DA opportunities compare with other data-related roles?**  
+   → Compared salaries, application accessibility, and transferable skills for career transitions into 
+
+# Tools I Used
+- **Python Libraries**  
+  - `ast` → parse structured text data  
+  - `pandas` → data manipulation & analysis  
+  - `datasets` (Hugging Face) → dataset loading  
+  - `matplotlib.pyplot` → data visualization  
+  - `seaborn` → advanced plotting & styling  
+
+- **Environment**  
+  - **Jupyter Notebook** → step-by-step analysis  
+  - **VS Code** → project management and development  
+  - **GitHub** → version control and portfolio showcase  
 
 # The Analysis
 ## 1. Which skills are most effective for newcomers (in terms of opportunities & salary)?
@@ -115,30 +139,105 @@ for p, n in zip(ax.patches, df_grouped['n']):
 - Although degree-required jobs are slightly more common (164 postings vs. 151), the salary premium in no-degree roles suggests newcomers can still compete effectively without academic credentials.
 
 ## 3. How do DA opportunities compare with other roles, and how transferable are DA skills?
+- 💰 Salary outlook: Data Analysts earn around $75K median, with clear paths to higher pay — Senior roles exceed $120K. Data Engineers (~$95K) offer stronger starting salaries, while Data Scientists (~$70K) and ML Engineers (~$65K) show growth potential but tighter entry.
+- 💻 Transferable skills: Python, SQL, and AWS form the universal backbone. Building on these with role-specific tools — big data platforms for engineering, machine learning frameworks for science/ML — enables smooth transitions.
+- 🎓 Accessibility in Vietnam: DA is the most approachable entry role with many postings not requiring a degree. Data Engineer is also promising for non-degree entrants, while Data Scientist skews more toward degree-dependent paths. Senior positions remain aspirational for the long term.
 
 View my notebook with detailed steps here:
 [4. Career_Pathways_Beyond_DA.ipynb](4.20%Career_Pathways_Beyond_DA.ipynb)
 
-### 3.1.
+### 3.1. How do salaries differ across DA and other data-related roles?
+I filtered the dataset to include only postings in Vietnam with valid salary information and focused on the six most frequent job titles within data-related roles. Median salaries were calculated for each role to establish a clear ranking of pay levels. The results were visualized with a boxplot to compare salary distributions and highlight differences across roles.
 
 #### Visualization
+```python
+# Salary distribution across top job titles
+sns.boxplot(
+    data=df_salary_vn_top6,
+    x='salary_year_avg',
+    y='job_title_short',
+    order=job_order
+)
+```
 
 #### Result
+![How do salaries differ across DA and other data-related roles?](images/salary_distribution_by_job_title.png)
 
 #### Insights
+- **Senior roles** such as Senior Data Engineer and Senior Data Analyst command the highest salaries, with median pay well above $120K, highlighting strong rewards for experience.
+- **Entry and mid-level roles** like Data Analyst, Data Scientist, and Machine Learning Engineer offer lower median salaries (~$60K–$90K), but with wider ranges, indicating opportunities for growth as skills and experience advance.
 
-### 3.2.
+### 3.2. What skill additions allow a DA to “upgrade” into other data-related roles?
+I analyzed job postings beyond the Data Analyst role by parsing their listed skills and identifying the top 10 most common requirements for each target position alongside those for Data Analysts. The overlap was used to highlight transferable skills, while the gaps revealed additional capabilities needed to transition. These insights were summarized into a roadmap table showing the skill pathways for moving from DA into other data-related roles.
 
 #### Visualization
+```python
+# Map transferable vs new skills for each target role
+df_skill_upgrade = pd.DataFrame([
+    {
+        "Target Role": role,
+        "Transferable Skills (from DA)": list(set(da_top_skills) & set(skills)),
+        "Skills to Learn": list(set(skills) - set(da_top_skills))
+    }
+    for role, skills in role_skill_map.items()
+])
+```
 
 #### Result
+What skill additions allow a DA to “upgrade” into other data-related roles?
+
+| Target Role              | Transferable Skills (from DA)                | Skills to Learn                                              |
+|---------------------------|-----------------------------------------------|--------------------------------------------------------------|
+| Data Engineer             | python, sql, aws                             | nosql, airflow, spark, mongodb, kafka, java, hadoop          |
+| Data Scientist            | aws, python, tableau, sql, r                 | spark, pytorch, tensorflow, java, hadoop                     |
+| Machine Learning Engineer | python, sql, aws                             | keras, spark, pandas, pytorch, tensorflow, java, scikit-learn |
+| Senior Data Analyst       | python, excel, sas, tableau, sql, power bi, r | bigquery, pyspark, spark                                     |
+| Senior Data Engineer      | python, sql, aws                             | nosql, airflow, spark, mongodb, kafka, java, hadoop          |
 
 #### Insights
+- Core **transferable skills** such as Python, SQL, and AWS serve as the foundation across all advanced roles, making them essential for Data Analysts aiming to upgrade.
+- To transition, analysts need to build **specialized skills** tailored to each role—like big data tools (Hadoop, Spark, Kafka) for engineering paths, or machine learning frameworks (TensorFlow, PyTorch, Keras) for science and ML careers.
 
-### 3.3.
+### 3.3. How do the application opportunities for Data Analyst compare with other data-related roles in Vietnam?
+I examined job postings to compare differences in accessibility factors such as degree requirements and remote work availability across Data Analyst and other data-related roles. Posting volumes were then visualized with stacked bar charts to show how these qualifications and options affect application opportunities by role.
 
 #### Visualization
+```python
+# Median salary by role
+df_salary_median = df_vn_roles.groupby('job_title_short')['salary_year_avg'].median()
 
+# Stacked bar: accessibility mix
+df_pivot.plot(kind='bar', stacked=True, 
+              color=[custom_palette[c] for c in df_pivot.columns])
+
+# Overlay line: median salary trend
+plt.plot(df_pivot.index, df_salary_median.reindex(df_pivot.index), 
+         color='orange', marker='o', linewidth=2)
+```
 #### Result
+![How do the application opportunities for Data Analyst compare with other data-related roles in Vietnam?](images/job_postings_accessibility_salary.png)
 
 #### Insights
+- **Data Analyst** shows over 300 postings with many positions not requiring a degree, offering a median salary of around $75K. This makes it the most accessible entry point for career switchers.
+- Among peer-level roles, **Data Engineer** (~750 postings, $95K) is highly promising since many postings accept candidates without a degree, while **Data Scientist** (~350 postings, $70K) leans heavily on degree requirements, making it less suitable for non-traditional entrants.
+- **Senior roles** (Senior Data Analyst, Senior Data Engineer) have far fewer postings but command significantly higher salaries (up to $145K for Senior Data Engineer), highlighting long-term growth potential rather than immediate entry paths.
+
+## Conclusion
+
+This project shows that **Data Analyst** remains the most accessible entry point into the Vietnamese data job market.  
+However, salaries for DA are relatively modest compared to roles like **Data Engineer, Data Scientist, and Senior Analyst**, which reward additional technical depth and specialization.  
+
+Key takeaways:
+- **High ROI skills** such as Python, SQL, and cloud tools (AWS) are both in high demand and well-compensated, making them essential for career growth.  
+- **Skill transferability is strong**: DA professionals can pivot to higher-paying roles by adding role-specific tools (e.g., Spark, TensorFlow, Airflow).  
+- **Accessibility factors matter**: Many DA jobs in Vietnam do not strictly require a degree, making the field more open compared to other roles.  
+
+In short, **DA is a strong starting point**, but to achieve higher salary and career mobility, analysts should continuously upskill in engineering, machine learning, or BI tools depending on their desired career path.
+
+---
+
+👉 Detailed methodology and results are documented in Jupyter notebooks, structured into four main parts:
+1. `1. EDA.ipynb`  
+2. `2. High_ROI_Skills.ipynb`  
+3. `3. Salary_Maximization_Strategies.ipynb`  
+4. `4. Career_Pathways_Beyond_DA.ipynb`  
